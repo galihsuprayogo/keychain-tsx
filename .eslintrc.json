@@ -1,0 +1,159 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        // "ecmaFeatures": {
+        //     "jsx": true,
+        //     "tsx": true
+        // },
+        // "ecmaVersion": 12,
+        // "sourceType": "module"
+        "project": "./tsconfig.json"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint",
+        "react-hooks"
+    ],
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            },
+            "typescript": {
+                "alwaysTryTypes": true
+            }
+        }
+    },
+    "rules": {
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "react/jsx-filename-extension": [
+            1,
+            {
+                "extensions": [
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
+        ],
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/member-delimiter-style": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/no-var-requires": "off",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/indent": 0,
+        "no-use-before-define": [
+            0
+        ],
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "error",
+        "react/prop-types": 0,
+        "import/prefer-default-export": 0,
+        "react/destructuring-assignment": 0,
+        "semi": [
+            "error",
+            "never"
+        ],
+        "indent": [
+            2,
+            2,
+            {
+                "SwitchCase": 1,
+                "offsetTernaryExpressions": true
+            }
+        ],
+        "quotes": [
+            "error",
+            "single",
+            {
+                "avoidEscape": true
+            }
+        ],
+        "array-callback-return": "off",
+        "consistent-return": "off",
+        "comma-dangle": "off",
+        "camelcase": "off",
+        "default-case": "off",
+        "function-paren-newline": "off",
+        "linebreak-style": "off",
+        "no-var": "off",
+        "no-unused-vars": "off",
+        "@typescript-eslint/no-unused-vars": [
+            "off"
+        ],
+        "no-unused-expressions": "off",
+        "no-unused-labels": "off",
+        "no-undef": "off",
+        "no-redeclare": "off",
+        "no-console": "off",
+        "no-alert": "off",
+        "no-return-assign": "off",
+        "no-shadow": "off",
+        "no-nested-ternary": "off",
+        "no-underscore-dangle": "off",
+        "no-unreachable": "off",
+        "no-mixed-operators": "off",
+        "no-param-reassign": "off",
+        "block-scoped-var": "off",
+        "vars-on-top": "off",
+        "radix": "off",
+        "react/require-default-props": [
+            0
+        ],
+        "react/no-unused-state": [
+            0
+        ],
+        "react/no-access-state-in-setstate": [
+            0
+        ],
+        "react/no-array-index-key": [
+            0
+        ],
+        "react/no-this-in-sfc": [
+            0
+        ],
+        "react/sort-comp": [
+            0
+        ],
+        "react/jsx-props-no-spreading": [
+            0
+        ],
+        "react/jsx-indent": [
+            0
+        ],
+        "react/react-in-jsx-scope": [
+            0
+        ],
+        "import/no-cycle": "off",
+        "import/no-extraneous-dependencies": "off",
+        "import/no-unresolved": "off",
+        "implicit-arrow-linebreak": "off",
+        "max-len": "off"
+    }
+}
