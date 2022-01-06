@@ -4,6 +4,7 @@ import {
   Pressable,
   Box,
   VStack,
+  HStack,
   Text
 } from 'native-base'
 import { AlertProps } from '../../interfaces'
@@ -21,6 +22,8 @@ function AlertPop(props: AlertProps) {
         return 'Authentification Successfull'
       case 'FingerprintScannerNotEnrolled':
         return 'Fingerprint Scanner has no enrolled fingers'
+      case 'NoCamera':
+        return 'No access to camera'
       default:
         break
     }
@@ -40,12 +43,12 @@ function AlertPop(props: AlertProps) {
             flex={1}
             alignItems="center"
             justifyContent="space-around"
-            py="50"
+            py="39"
             px="5"
             bg="white"
             space="5"
-          >
 
+          >
             <Box>
               <Text
                 fontSize="16"
@@ -56,38 +59,46 @@ function AlertPop(props: AlertProps) {
                 {getMessage()}
               </Text>
             </Box>
-            <Pressable
-              onPress={props.onCloseModal}
-            >
-              {({ isHovered, isFocused, isPressed }) => (
-                <VStack
-                  bg="gray.500"
-                  height="9"
-                  px="6"
-                  borderRadius="5"
-                  alignItems="center"
-                  justifyContent="center"
+          </VStack>
+        </Modal.Body>
+        <Modal.Footer
+          backgroundColor="gray.200"
+        >
+          <Pressable
+            onPress={props.onCloseModal}
+            flex={1}
+            width="full"
+          >
+            {({ isHovered, isFocused, isPressed }) => (
+              <VStack
+                bg="transparent"
+                height="5"
+                alignItems="center"
+                justifyContent="center"
+
+              >
+                <Box
                   style={{
                     transform: [
                       {
-                        scale: isPressed ? 0.98 : 1,
+                        scale: isPressed ? 0.9 : 1,
                       },
                     ],
                   }}
                 >
                   <Text
                     fontSize="16"
-                    color="white"
+                    color="black"
                     textAlign="center"
                     letterSpacing="sm"
                   >
                       OK
                   </Text>
-                </VStack>
-              )}
-            </Pressable>
-          </VStack>
-        </Modal.Body>
+                </Box>
+              </VStack>
+            )}
+          </Pressable>
+        </Modal.Footer>
       </Modal.Content>
     </Modal>
   )

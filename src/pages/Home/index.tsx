@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, Text } from 'react-native'
 import { VStack } from 'native-base'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as Keychain from 'react-native-keychain'
@@ -15,19 +16,28 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 function Home({ navigation }: Props) {
   const [isAlert, setIsAlert] = useState(false)
+  const [isFace, setIsFace] = useState(false)
   const [name, setName] = useState('')
+  const [hasPermission, setHasPermission] = useState(false)
+  const [type, setType] = useState(Camera.Constants.Type.front)
+  const [faceData, setFaceData] = useState([])
 
   useEffect(() => {
-    const mount = setTimeout(() => {
+    const mount = setTimeout(async () => {
       FingerprintScanner.release()
-      FingerprintScanner.isSensorAvailable()
-        .then((biometryType) => {
-          console.log('biometric type => ', biometryType)
-        })
-        .catch((error) => console.log('isSensorAvailable error => ', error))
-    }, 1000)
+      checkCameraPermission()
+    }, 500)
     return () => clearTimeout(mount)
   }, [])
+
+  const checkCameraPermission = async () => {
+    const status = await Camera.requestCameraPermissionsAsync()
+    if (status.status === 'granted') {
+      setHasPermission(true)
+    } else {
+      setHasPermission(false)
+    }
+  }
 
   const authFinger = () => {
     setName('')
@@ -47,6 +57,52 @@ function Home({ navigation }: Props) {
         setName(err.name)
         console.log('err : ', err)
       })
+  }
+
+  // function getFaceDataView() {
+  //   if (faceData.length === 0) {
+  //     return (
+  //       <View style={styles.faces}>
+  //         <Text style={styles.faceDesc}>No faces :(</Text>
+  //       </View>
+  //     )
+  //   }
+  //   return faceData.map((face, index) => {
+  //     const eyesShut = face.rightEyeOpenProbability < 0.4 && face.leftEyeOpenProbability < 0.4
+  //     const winking = !eyesShut && (face.rightEyeOpenProbability < 0.4 || face.leftEyeOpenProbability < 0.4)
+  //     const smiling = face.smilingProbability > 0.7
+  //     return (
+  //       <View style={styles.faces} key={index}>
+  //         <Text style={styles.faceDesc}>
+  //              Eyes Shut:
+  //           {eyesShut.toString()}
+  //         </Text>
+  //         <Text style={styles.faceDesc}>
+  //            Winking:
+  //           {winking.toString()}
+  //         </Text>
+  //         <Text style={styles.faceDesc}>
+  //           Smiling:
+  //           {smiling.toString()}
+  //         </Text>
+  //       </View>
+  //     )
+  //   })
+  // }
+
+  const handleFacesDetected = (faces : any) => {
+    setFaceData(faces)
+    console.log(faces)
+  }
+
+  const authFace = () => {
+    if (hasPermission) {
+      setIsFace(true)
+    } else {
+      setIsFace(false)
+      setName('NoCamera')
+      setIsAlert(true)
+    }
   }
 
   return (
@@ -81,16 +137,48 @@ function Home({ navigation }: Props) {
           />
         </VStack>
       ) : null}
+      {isFace ? (
+        <Camera
+          type={Camera.Constants.Type.front}
+          style={styles.camera}
+          onFacesDetected={handleFacesDetected}
+          faceDetectorSettings={{
+            mode: FaceDetector.FaceDetectorMode.fast,
+            detectLandmarks: FaceDetector.FaceDetectorLandmarks.none,
+            runClassifications: FaceDetector.FaceDetectorClassifications.none,
+            minDetectionInterval: 100,
+            tracking: true
+          }}
+        />
+      ) : null}
       <Flat
         label="FINGERPRINT"
         onPress={authFinger}
       />
       <Flat
         label="FACE DETECTOR"
-        onPress={() => console.log('did face it')}
+        onPress={authFace}
       />
     </VStack>
   )
 }
+
+const styles = StyleSheet.create({
+  camera: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  faces: {
+    backgroundColor: '#ffffff',
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 16
+  },
+  faceDesc: {
+    fontSize: 20
+  }
+})
 
 export default Home

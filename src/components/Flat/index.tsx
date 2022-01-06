@@ -12,7 +12,7 @@ function Flat(props: FlatProps) {
   return (
     <Pressable
       onPress={onPress}
-      width="80%"
+      width="55%"
     >
       {({ isHovered, isFocused, isPressed }) => (
         <VStack
