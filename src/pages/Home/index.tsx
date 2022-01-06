@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { VStack } from 'native-base'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import * as Keychain from 'react-native-keychain'
+import { Camera } from 'expo-camera'
+import * as FaceDetector from 'expo-face-detector'
 import FingerprintScanner from 'react-native-fingerprint-scanner'
 import {
   AlertPop,
@@ -53,6 +55,7 @@ function Home({ navigation }: Props) {
       justifyContent="center"
       flex={1}
       width="100%"
+      space="5"
     >
       {isAlert ? (
         <VStack
@@ -78,10 +81,13 @@ function Home({ navigation }: Props) {
           />
         </VStack>
       ) : null}
-
       <Flat
         label="FINGERPRINT"
         onPress={authFinger}
+      />
+      <Flat
+        label="FACE DETECTOR"
+        onPress={() => console.log('did face it')}
       />
     </VStack>
   )
