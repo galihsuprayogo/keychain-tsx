@@ -19,6 +19,8 @@ function AlertPop(props: AlertProps) {
         return 'Time out, please wait for 30 seconds'
       case 'Success':
         return 'Authentification Successfull'
+      case 'FingerprintScannerNotEnrolled':
+        return 'Fingerprint Scanner has no enrolled fingers'
       default:
         break
     }
